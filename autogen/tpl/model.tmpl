@@ -1,0 +1,19 @@
+package models
+
+import (
+    "time"
+    "reflect"
+)
+
+const {{.SourceName}}LogsName = "{{.ChName}}"
+
+type {{.SourceName}}Logs struct {
+    UUID                 uint64    `db:"uuid" json:"uuid" type:"UInt64" uuid:"true"`
+    Day                  time.Time `db:"day" json:"day" type:"Date" partitioning:"true" mv_transform:"today()"`
+    TS                   uint64    `db:"ts" json:"ts" type:"UInt64" timestamp:"true" ch_index_pos:"1"`
+    Table                string    `db:"_table" type:"String" json:"table" skip:"db"`
+}
+
+func init() {
+    models[{{.SourceName}}LogsName] = reflect.TypeOf({{.SourceName}}Logs{})
+}

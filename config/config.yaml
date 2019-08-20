@@ -1,0 +1,17 @@
+app:
+  listening_port: "8888"
+  reset: false
+  static_responses: "../config/static_responses.json"
+  kibana_ver: "5.6.15"
+  create_ch_tables: false
+
+  logging:
+    log_debug_messages: true
+    log_requests: true
+    log_requests_file: "http_transactions.log"
+    proxy_to_elastic: false
+
+  sources:
+    clickhouse: "tcp://127.0.0.1:9000"
+    kafka: "kafka.test:9092"
+    elasticsearch: "http://localhost:9200"

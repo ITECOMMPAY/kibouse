@@ -1,0 +1,95 @@
+package wrappers
+
+import (
+    "reflect"
+    "strconv"
+
+    "github.com/pkg/errors"
+
+    "kibouse/data/models"
+)
+
+func init() {
+    factories[models.{{.SourceName}}LogsName] = New{{.SourceName}}LogsContainer
+}
+
+// New{{.SourceName}}LogsContainer returns data container for logs
+func New{{.SourceName}}LogsContainer() (ChDataContainer, error) {
+    dbFieldsMapping, err := models.CreateDBFieldsInfoMap(reflect.TypeOf(models.{{.SourceName}}Logs{}))
+    if err != nil {
+        return nil, err
+    }
+    return &{{.SourceName}}LogsContainer{
+        dataContainer: dataContainer{
+            index: 0,
+            dbTableInfo: models.ModelInfo {
+                DBName:     models.{{.SourceName}}LogsName,
+                DataFields: dbFieldsMapping,
+            },
+        },
+        data: nil,
+    }, nil
+}
+
+
+type {{.SourceName}}LogsItem struct {
+    data models.{{.SourceName}}Logs
+    modelInfo *models.ModelInfo
+}
+
+func (i {{.SourceName}}LogsItem) ID() string {
+    return strconv.FormatUint(i.data.UUID, 10)
+}
+
+func (i {{.SourceName}}LogsItem) Data() interface{} {
+    return i.data
+}
+
+func (i {{.SourceName}}LogsItem) AttrValue(name string) (*reflect.Value, bool) {
+    if sourceName, ok := i.modelInfo.ClickhouseAttrCodeName(name); ok {
+        return getValueByName(sourceName, i.data)
+    }
+    return nil, false
+}
+
+func (i {{.SourceName}}LogsItem) ChTableName() string {
+    return i.data.Table
+}
+
+func (i {{.SourceName}}LogsItem) ModelScheme() *models.ModelInfo {
+    return i.modelInfo
+}
+
+type {{.SourceName}}LogsWrapper struct {
+    dataContainer
+    data []models.{{.SourceName}}Logs
+}
+
+func (container *{{.SourceName}}LogsWrapper) NextItem() DataItem {
+    if container == nil {
+        return nil
+    }
+    if container.index < len(container.data) {
+        container.index++
+        return {{.SourceName}}LogsItem {
+            data: container.data[container.index-1],
+            modelInfo: &container.modelInfo,
+        }
+    }
+    return nil
+}
+
+func (container *{{.SourceName}}LogsWrapper) FetchData(loaderFunc loader) error {
+    if container == nil {
+        return errors.New("data wrapper is not initialized")
+    }
+    container.data = make([]models.{{.SourceName}}Logs, 0)
+    return loaderFunc(&container.data)
+}
+
+func (container *{{.SourceName}}LogsWrapper) Items() int {
+    if container == nil {
+        return 0
+    }
+    return len(container.data)
+}
