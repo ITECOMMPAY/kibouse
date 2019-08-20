@@ -84,15 +84,25 @@ type GateLogs struct {
 ```
 ### supported field tags
 required:
+
 db - clickhouse attribute name
+
 json - elasticsearch parameter name
+
 type - clickhouse attribute type
+
 uuid - field contains record id
+
 inv_index - full text search supporting required for this field 
+
 optional (uses only to autonatically create CH tables at kibouse startup, not required when Clickhouse tables already exist):
+
 ch_index_pos - sets attribute as the part of CH index
+
 partitioning - partitioning key
+
 default - default attribute value in CH
+
 
 3. Build kibouse
 
@@ -126,4 +136,5 @@ Start indexer tool for logs tokenization and updating inverted index.
 2. supported data aggregations(visualization page):
 
 Top level: date histogram
+
 Nested: filters
