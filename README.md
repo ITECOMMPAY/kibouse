@@ -1,6 +1,6 @@
 Hi all.
 
-Development on the project was stoped.
+Development on the project was stopped.
 We decided to stay with elastic as the main logs' storage and hence there is no need for us in kibana for clickhouse.
 
 We still see some potential with this approach though. And hope the community will find our MVP helpful and proceed with this using kibouse as the start point.
