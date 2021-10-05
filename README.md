@@ -7,6 +7,14 @@ We still see some potential with this approach though. And hope the community wi
 
 ---
 
+- [Clickhouse adapter for Kibana](#clickhouse-adapter-for-kibana)
+  * [Configuration](#configuration)
+  * [Usage](#usage)
+    + [Before the first run:](#before-the-first-run-)
+    + [supported field tags](#supported-field-tags)
+    + [Kibouse launch](#kibouse-launch)
+  * [Limitations](#limitations)
+
 # Clickhouse adapter for Kibana
 
 Kibouse is a Go tool that can be used to provide supporting **[Kibana](https://github.com/elastic/kibana)** as analytics and search dashboard for **[Clickhouse](https://github.com/yandex/ClickHouse)**
