@@ -1,6 +1,8 @@
-Hi all.
+# Archived
+The project was a proof-of-concept. It is archived and there will be no new development.
 
-Development on the project was stopped.
+Feel free to look at **[Quesma](https://github.com/QuesmaOrg/quesma)** instead.
+
 We decided to stay with elastic as the main logs' storage and hence there is no need for us in kibana for clickhouse.
 
 We still see some potential with this approach though. And hope the community will find our MVP helpful and proceed with this using kibouse as the start point.
